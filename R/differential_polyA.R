@@ -47,18 +47,23 @@ FindDifferentialPolyA <- function(
     stop("ident.1 not found in object")
   }
   
-  for (i in 1:length(covariates)) {
-    if (is.na(match(covariates[[i]], colnames(object[[]])))) {
-      stop("Covariates are not found in meta data, please make sure you are specifying correctly.")
-    }
-  }
+  # for (i in 1:length(covariates)) {
+  #   if (is.na(match(covariates[[i]], colnames(object[[]])))) {
+  #     stop("Covariates are not found in meta data, please make sure you are specifying correctly.")
+  #   }
+  # }
   features <- features %||% rownames(x = object[[assay]]@scale.data)
   
   df <- data.frame(idents = Idents(object))
-  for (i in 1:length(covariates)) {
-    df[,i+1] <- object[[]][,match(covariates[[i]], colnames(object[[]]))]
+  if length(covariates) > 0 :
+      for (i in 1:length(covariates)) {
+        df[,i+1] <- object[[]][,match(covariates[[i]], colnames(object[[]]))]
+      }
+      colnames(df) <- c("ident", covariates)
+  } else {
+    colnames(df) <- c("ident")
   }
-  colnames(df) <- c("ident", covariates)
+  
   
   r.matrix <- object[[assay]]@scale.data
   df$ident <- relevel(df$ident, ref = ident.2)     

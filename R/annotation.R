@@ -21,22 +21,23 @@
 #' 
 GetPolyADbAnnotation <- function(
   object, 
+  seqnames_col, pos_col, strand_col,
   assay = "polyA",
   polyAdb.file = NULL, #
-  max.dist = 50) 
+  max.dist = 50, sep=' ',) 
 {
   #readin polyAdbv3 and make GRanges file 
   if (!( file.exists(polyAdb.file))) {
     stop("Please check that you have specified the location of polyAdb.file correctly")
   }
   
-  anno <- read.table(file = polyAdb.file, header = TRUE)
+  anno <- read.table(file = polyAdb.file, header = TRUE, sep=sep)
   GR.polyA.db = makeGRangesFromDataFrame( anno, 
                                           keep.extra.columns = TRUE, 
-                                          seqnames.field = "hg38_Chromosome_format",
-                                          start.field = "hg38_Position", 
-                                          end.field = "hg38_Position",
-                                          strand.field = "Strand")
+                                          seqnames.field = seqnames_col,
+                                          start.field = pos_col, 
+                                          end.field = pos_col,
+                                          strand.field = strand_col)
   
   if( !assay %in% Assays(object) ){
     stop(paste0(assay," assay is not present in object"))
