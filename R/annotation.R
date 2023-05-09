@@ -24,7 +24,7 @@ GetPolyADbAnnotation <- function(
   seqnames_col, pos_col, strand_col,
   assay = "polyA",
   polyAdb.file = NULL, #
-  max.dist = 50, sep=' ',) 
+  max.dist = 50, sep=' ') 
 {
   #readin polyAdbv3 and make GRanges file 
   if (!( file.exists(polyAdb.file))) {

@@ -55,7 +55,7 @@ FindDifferentialPolyA <- function(
   features <- features %||% rownames(x = object[[assay]]@scale.data)
   
   df <- data.frame(idents = Idents(object))
-  if length(covariates) > 0 :
+  if (length(covariates) > 0) {
       for (i in 1:length(covariates)) {
         df[,i+1] <- object[[]][,match(covariates[[i]], colnames(object[[]]))]
       }
